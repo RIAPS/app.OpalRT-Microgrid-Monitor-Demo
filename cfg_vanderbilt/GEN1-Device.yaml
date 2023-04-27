@@ -1,0 +1,34 @@
+
+path_to_config_files: ./cfg_vanderbilt
+names:
+  - GEN1-Banshee
+GlobalDebugMode: 2 # 0=no debug messages, 1=RAIPS Device level debug, 2=Modbus slave low level messages
+
+   
+# add for the pytransition state machine
+testlog: GEN201
+uuid: "201"
+vote_timeout: 10000.0  # Float in ms
+msg_timeouts:
+  delay:
+    relay: 10.0 # Float in s
+    group: 10.0  # Float in s
+  time:
+    relay: 0
+    group: 0
+  next: None
+pcc_relay_id: F1PCC
+initial_state: SHUTDOWN
+
+# Group membership configuration
+# Format for lookup_group_instance_name must be:
+# "['node_name1', 'node_name2', ...]": GroupName
+
+lookup_group_instance_name:
+  "['111', '112', '201', '202']": GroupF1
+  "['114']": GroupF2
+  "['115', '116', '203']": GroupF3
+  "['111', '112', '114', '201', '202']": GroupF12
+  "['111', '112', '115', '116', '201', '203']": GroupF13
+  "['114', '115', '116', '202', '203']": GroupF23
+  "['111', '112', '114', '115', '116', '201', '202', '203']": GroupF123

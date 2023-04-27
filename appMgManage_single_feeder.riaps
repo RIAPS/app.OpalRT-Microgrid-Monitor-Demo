@@ -1,0 +1,68 @@
+app appMgMonitorSingleFeeder{
+
+	message DeviceQry;
+	message DeviceAns;
+    
+	message DgMsg;
+    message RelayMsg;
+
+	library cfg_vanderbilt;
+	library applibs;
+
+	//------------------------------------------------------
+	//  Devices
+	//------------------------------------------------------
+
+	device OPAL_MODBUS_DEVICE(path_to_device_list){
+    	inside modbus_command_port;
+		inside modbus_event_port;
+		ans device_port: (DeviceQry, DeviceAns) timed;
+	}
+
+	//------------------------------------------------------
+	//  GEN
+	//------------------------------------------------------
+
+	component GEN_PWR_MANAGER(config, Ts){
+	    timer poller 1000 msec;
+
+	    // Communicate with device
+	    qry device_qry_port: (DeviceQry, DeviceAns) timed;
+	    pub gen_pub: DgMsg;
+	}
+
+    //------------------------------------------------------
+    //  RELAYs in one Feeder
+    //------------------------------------------------------
+
+
+	component RELAY_MANAGER(config){
+	    timer poller 1000 msec;
+
+	    // Communicate with device
+	    qry device_port: (DeviceQry, DeviceAns) timed;
+
+	    // publish relays' status
+	    pub relay_pub: RelayMsg;
+	}
+
+	//------------------------------------------------------
+	//  Actors
+	//------------------------------------------------------
+
+	actor GEN_ACTOR(path_to_device_list,config,Ts){
+		internal DeviceQry, DeviceAns;
+		{
+			dvc : OPAL_MODBUS_DEVICE(path_to_device_list=path_to_device_list);
+			power_manager : GEN_PWR_MANAGER(config=config, Ts=Ts);
+		}
+	}
+
+	actor RELAY_ACTOR(path_to_device_list, config){
+		internal DeviceQry, DeviceAns;
+		{
+			dvc : OPAL_MODBUS_DEVICE(path_to_device_list=path_to_device_list);
+			power_manager : RELAY_MANAGER(config=config);
+		}
+	}
+}
