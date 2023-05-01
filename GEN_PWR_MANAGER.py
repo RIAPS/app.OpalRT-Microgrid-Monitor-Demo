@@ -34,6 +34,8 @@ class GEN_PWR_MANAGER(Component):
                          f"GEN_PWR_MANAGER | on_device_qry_port \n"
                          f"recv ans from modbus device: {msg}"
                          f"{helper.RESET}")
+
+        self.gen_pub.send_pyobj(msg.to_dict())
     # riaps:keep_device_qry_port:end
 
     # riaps:keep_poller:begin

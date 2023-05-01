@@ -4,6 +4,8 @@ app appMgMonitorSingleFeeder{
         network 172.21.20.70;
     }
 
+    on (172.21.20.20) MONITOR_ACTOR();
+
     on (172.21.20.50) RELAY_ACTOR(path_to_device_list = "./cfg_vanderbilt/RELAYF1.yaml", config = "./cfg_vanderbilt/F1PCC.yaml");
 
     //Gens

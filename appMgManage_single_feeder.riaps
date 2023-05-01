@@ -46,6 +46,12 @@ app appMgMonitorSingleFeeder{
 	    pub relay_pub: RelayMsg;
 	}
 
+	component MONITOR(){
+	    timer poller 1000 msec;
+        sub gen_sub: DgMsg;
+        sub relay_sub: RelayMsg;
+    }
+
 	//------------------------------------------------------
 	//  Actors
 	//------------------------------------------------------
@@ -64,5 +70,11 @@ app appMgMonitorSingleFeeder{
 			dvc : OPAL_MODBUS_DEVICE(path_to_device_list=path_to_device_list);
 			power_manager : RELAY_MANAGER(config=config);
 		}
+	}
+
+	actor MONITOR_ACTOR(){
+        {
+            monitor : MONITOR();
+        }
 	}
 }

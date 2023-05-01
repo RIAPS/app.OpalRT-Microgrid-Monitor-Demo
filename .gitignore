@@ -1,6 +1,7 @@
 .idea
-.json
-.cert
-.key
+riaps.json
+*.cert
+*.key
 riaps.yaml
-
+appMgMonitorSingleFeeder.json
+server_logs
