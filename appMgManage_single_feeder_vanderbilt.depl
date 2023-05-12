@@ -4,12 +4,9 @@ app appMgMonitorSingleFeeder{
         network 172.21.20.70;
     }
 
-    on (172.21.20.20) MONITOR_ACTOR();
-
-    on (172.21.20.50) RELAY_ACTOR(path_to_device_list = "./cfg_vanderbilt/RELAYF1.yaml", config = "./cfg_vanderbilt/F1PCC.yaml");
 
     //Gens
-    on (172.21.20.51) GEN_ACTOR(path_to_device_list="./cfg_vanderbilt/GEN1-Device.yaml", config = "./cfg_vanderbilt/GEN1-Banshee.yaml", Ts=0.2);
-    on (172.21.20.52) GEN_ACTOR(path_to_device_list="./cfg_vanderbilt/GEN2-Device.yaml", config = "./cfg_vanderbilt/GEN2-Banshee.yaml", Ts=0.2);
+    on (172.21.20.51) GEN_ACTOR(path_to_device_list="./cfg_vanderbilt/GEN1-Device.yaml", config = "./cfg_vanderbilt/GEN1-Banshee.yaml", name="A", Ts=0.2);
+    on (172.21.20.52) GEN_ACTOR(path_to_device_list="./cfg_vanderbilt/GEN2-Device.yaml", config = "./cfg_vanderbilt/GEN2-Banshee.yaml", name="B", Ts=0.2);
 
 }
