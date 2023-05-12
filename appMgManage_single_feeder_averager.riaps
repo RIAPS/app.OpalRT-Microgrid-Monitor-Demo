@@ -1,0 +1,56 @@
+app appMgMonitorSingleFeeder{
+
+	message DeviceQry;
+	message DeviceAns;
+    
+	message DgMsg;
+    message RelayMsg;
+	message NodeData;
+
+	library cfg_vanderbilt;
+	library applibs;
+
+
+	//------------------------------------------------------
+	//  Devices
+	//------------------------------------------------------
+
+	device OPAL_MODBUS_DEVICE(path_to_device_list){
+    	inside modbus_command_port;
+		inside modbus_event_port;
+		ans device_port: (DeviceQry, DeviceAns) timed;
+	}
+
+	//------------------------------------------------------
+	//  GEN
+	//------------------------------------------------------
+
+	component GEN_PWR_MANAGER(config, Ts){
+	    timer poller 10000 msec;
+
+	    // Communicate with device
+	    qry device_qry_port: (DeviceQry, DeviceAns) timed;
+	    pub gen_pub: DgMsg;
+	}
+
+	component MONITOR(name,Ts){
+        sub gen_sub: DgMsg;
+        timer update 100;
+        timer display 1000;
+        sub nodeDataSub : NodeData;
+        pub nodeDataPub : NodeData;
+    }
+
+	//------------------------------------------------------
+	//  Actors
+	//------------------------------------------------------
+
+	actor GEN_ACTOR(path_to_device_list,config,name,Ts){
+		internal DeviceQry, DeviceAns, DgMsg;
+		{
+			dvc : OPAL_MODBUS_DEVICE(path_to_device_list=path_to_device_list);
+			power_manager : GEN_PWR_MANAGER(config=config,Ts=Ts);
+			monitor : MONITOR(name=name,Ts=Ts);
+		}
+	}
+}

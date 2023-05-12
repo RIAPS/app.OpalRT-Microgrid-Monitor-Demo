@@ -1,0 +1,17 @@
+app appMgMonitorSingleFeeder{
+
+    host all{
+        network 172.21.20.70;
+    }
+
+
+    //Gens
+    on (172.21.20.51) GEN_ACTOR(path_to_device_list="./cfg_ncsu/DSP111-Device.yaml", config = "./cfg_ncsu/DSP111-Banshee.yaml", name='A', Ts=0.2);
+    on (172.21.20.51) GEN_ACTOR(path_to_device_list="./cfg_ncsu/DSP112-Device.yaml", config = "./cfg_ncsu/DSP112-Banshee.yaml", name='B', Ts=0.2);
+    on (172.21.20.51) GEN_ACTOR(path_to_device_list="./cfg_ncsu/DSP114-Device.yaml", config = "./cfg_ncsu/DSP114-Banshee.yaml", name='C', Ts=0.2);
+    on (172.21.20.51) GEN_ACTOR(path_to_device_list="./cfg_ncsu/DSP115-Device.yaml", config = "./cfg_ncsu/DSP115-Banshee.yaml", name='D', Ts=0.2);
+    on (172.21.20.51) GEN_ACTOR(path_to_device_list="./cfg_ncsu/DSP116-Device.yaml", config = "./cfg_ncsu/DSP116-Banshee.yaml", name='E', Ts=0.2);
+
+
+
+}
