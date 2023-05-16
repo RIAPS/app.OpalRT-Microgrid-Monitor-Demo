@@ -35,11 +35,7 @@ app appMgMonitorSingleFeeder{
 
 	component MONITOR(name,Ts){
         sub gen_sub: DgMsg;
-        timer update 100;
-        timer display 1000;
-        sub nodeDataSub : NodeData;
-        pub nodeDataPub : NodeData;
-    }
+    	}
 
 	//------------------------------------------------------
 	//  Actors
